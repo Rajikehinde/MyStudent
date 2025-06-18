@@ -18,4 +18,6 @@ public class Student {
     private String firstName;
     private String surName;
     private String middleName;
+    private String level;
+
 }
