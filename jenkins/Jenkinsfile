@@ -1,26 +1,46 @@
+// pipeline
+// {
+//     agent any
+//     stages
+//     {
+//      stage('build')
+//         {
+//         steps{
+//             echo "this is build stage"
+//              }
+//         }
+//
+//      stage('test')
+//         {
+//         steps{
+//             echo "this is a test stage"
+//             }
+//         }
+//      stage("deploy")
+//         {
+//         steps{
+//             echo "this is deploy stage"
+//             }
+//         }
+//     }
+// }
+
 pipeline
 {
     agent any
     stages
     {
-     stage('build')
-        {
+         stage('build')
+         {
         steps{
-            echo "this is build stage"
+            sh 'mvn clean package'
              }
-        }
-
-     stage('test')
-        {
-        steps{
-            echo "this is a test stage"
-            }
-        }
-     stage("deploy")
-        {
-        steps{
-            echo "this is deploy stage"
-            }
+             
+        post {
+        success{
+            archiveArtifacts artifacts: '**/target/*.war'
+                }
+             }
         }
     }
 }
