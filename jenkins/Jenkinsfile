@@ -1,6 +1,6 @@
 // pipeline
 // {
-//     agent any
+//     agent none
 //     stages
 //     {
 //      stage('build')
@@ -10,36 +10,47 @@
 //              }
 //         }
 //
-//      stage('test')
+//         stage('test')
 //         {
-//         steps{
-//             echo "this is a test stage"
-//             }
-//         }
-//      stage("deploy")
-//         {
-//         steps{
-//             echo "this is deploy stage"
+//             steps{
+//
 //             }
 //         }
 //     }
 // }
 
-pipeline
-{
-
+pipeline {
     agent any
 
-    tools {
-      maven 'Maven 3.9'
-    }
-    stages
-    {
-         stage('build')
-         {
-        steps{
-            sh 'mvn clean package'
-             }
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/Rajikehinde/MyStudent.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t mystudent-app .'
+            }
+        }
+
+        stage('Run App') {
+            steps {
+                sh 'docker run -d -p 8081:8081 --name mystudent mystudent-app'
+            }
         }
     }
 }
