@@ -27,31 +27,31 @@ pipeline
 //                 }
 //             }
         }
-    }
-    stage('test')
-    {
-        parallel
-        {
-            stage('testA')
+        stage('test')
             {
-                steps
+                parallel
                 {
-                    echo " This is test A"
+                    stage('test A')
+                    {
+                        steps
+                        {
+                            echo " This is test A"
+                        }
+                    }
+                    stage('test B')
+                    {
+                        steps
+                        {
+                            echo " This is test B"
+                        }
+                    }
                 }
+                post {
+                   success {
+                       archiveArtifacts artifacts: '**/target/*.jar'
+                           }
+                     }
             }
-            stage('test B')
-            {
-                steps
-                {
-                    echo " This is test B"
-                }
-            }
-        }
-        post {
-           success {
-               archiveArtifacts artifacts: '**/target/*.jar'
-                   }
-             }
     }
 }
 
