@@ -4,6 +4,13 @@ pipeline
     tools {
       maven 'Maven 3.9'
     }
+    parameters {
+      string defaultValue: 'RAJI', name: 'LASTNAME'
+    }
+
+    environment{
+        NAME = "kerahn"
+    }
 
     stages
     {
@@ -11,6 +18,7 @@ pipeline
         {
         steps{
             sh 'mvn clean package'
+            echo "hello $NAME  ${params.LASTNAME}"
              }
 
         post {
