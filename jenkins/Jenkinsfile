@@ -21,12 +21,37 @@ pipeline
             echo "hello $NAME  ${params.LASTNAME}"
              }
 
-        post {
-          success {
-                archiveArtifacts artifacts: '**/target/*.jar'
+//         post {
+//           success {
+//                 archiveArtifacts artifacts: '**/target/*.jar'
+//                 }
+//             }
+        }
+    }
+    stage('test')
+    {
+        parallel
+        {
+            stage('testA')
+            {
+                steps
+                {
+                    echo " This is test A"
+                }
+            }
+            stage('test B')
+            {
+                steps
+                {
+                    echo " This is test B"
                 }
             }
         }
+        post {
+           success {
+               archiveArtifacts artifacts: '**/target/*.jar'
+                   }
+             }
     }
 }
 
