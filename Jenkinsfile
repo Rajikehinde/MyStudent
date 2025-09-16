@@ -1,9 +1,9 @@
-def COLOR_MAP = [
-    'SUCCESS': '#00FF00', // Green
-    'FAILURE': '#FF0000', // Red
-    'UNSTABLE': '#FFFF00', // Yellow
-    'ABORTED': '#808080'   // Gray
-]
+// def COLOR_MAP = [
+//     'SUCCESS': '#00FF00', // Green
+//     'FAILURE': '#FF0000', // Red
+//     'UNSTABLE': '#FFFF00', // Yellow
+//     'ABORTED': '#808080'   // Gray
+// ]
 def MESSAGE
 pipeline{
 	agent any
@@ -32,18 +32,18 @@ pipeline{
 			steps {
 				sh 'mvn -s settings.xml -DskipTests install'
 			}
-			post {
-				success {
-					echo 'Now Archiving it...'
-                  archiveArtifacts artifacts: '**/target/*.war'
-               }
-            }
+// 			post {
+// 				success {
+// 					echo 'Now Archiving it...'
+//                   archiveArtifacts artifacts: '**/target/*.war'
+//                }
+//             }
 		}
-		stage('Unit Test') {
-			steps {
-				sh 'mvn -s settings.xml test'
-			}
-		}
+// 		stage('Unit Test') {
+// 			steps {
+// 				sh 'mvn -s settings.xml test'
+// 			}
+// 		}
 // 		stage('Checkstyle Analysis') {
 //         			steps {
 //         				sh 'mvn -s settings.xml checkstyle:checkstyle'
