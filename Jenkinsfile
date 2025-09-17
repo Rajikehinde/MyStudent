@@ -4,7 +4,7 @@
 //     'UNSTABLE': '#FFFF00', // Yellow
 //     'ABORTED': '#808080'   // Gray
 // ]
-def MESSAGE
+// def MESSAGE
 pipeline{
 	agent any
 	tools{
@@ -30,7 +30,7 @@ pipeline{
 		}
 		stage('Build') {
 			steps {
-				sh 'mvn -s settings.xml -DskipTests install'
+				sh 'mvn clean install -s settings.xml -DskipTests'
 			}
 // 			post {
 // 				success {
