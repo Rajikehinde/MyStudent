@@ -4,22 +4,21 @@
 //     'UNSTABLE': '#FFFF00', // Yellow
 //     'ABORTED': '#808080'   // Gray
 // ]
-def MESSAGE
 pipeline{
 	agent any
 	tools{
 		jdk 'JDK17'
 		maven 'MAVEN3.9'
 	}
-// 	environment{
-// 	    SNAP_REPO = 'my_student'
-//         RELEASE_REPO = "my_student-release"
-//         CENTRAL_REPO    = 'my_student-maven-central'
-//         NEXUXIP = ''
-//         NEXUS_PORT = '8081'
-//         NEXUS_GRP_REPO = 'my_student-maven-group'
-//         NEXUS_CREDENTIAL_ID = ''
-// 	}
+	environment{
+	    SNAP_REPO = 'my_student'
+        RELEASE_REPO = "my_student-release"
+        CENTRAL_REPO    = 'my_student-maven-central'
+        NEXUXIP = '172.31.28.79'
+        NEXUS_PORT = '8081'
+        NEXUS_GRP_REPO = 'my_student-maven-group'
+        NEXUS_CREDENTIAL_ID = 'nexuslogin'
+	}
 	stages {
 		stage('Fetch Code') {
 			steps {
@@ -28,7 +27,7 @@ pipeline{
 		}
 		stage('Build') {
 			steps {
-				sh 'mvn clean install -DskipTests'
+				sh 'mvn clean install -s settings.xml -DskipTests'
 			}
 // 			post {
 // 				success {
@@ -37,13 +36,13 @@ pipeline{
 //                }
 //             }
 		}
-// 		stage(''){
-// 		    steps {
-// 		        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]){
-// 		            sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
-// 		        }
-// 		    }
-// 		}
+		stage('Deploy to Nexus'){
+		    steps {
+		        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]){
+		            sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
+		        }
+		    }
+		}
 // 		stage('Unit Test') {
 // 			steps {
 // 				sh 'mvn -s settings.xml test'
