@@ -1,9 +1,9 @@
-def COLOR_MAP = [
-    'SUCCESS': '#00FF00', // Green
-    'FAILURE': '#FF0000', // Red
-    'UNSTABLE': '#FFFF00', // Yellow
-    'ABORTED': '#808080'   // Gray
-]
+// def COLOR_MAP = [
+//     'SUCCESS': '#00FF00', // Green
+//     'FAILURE': '#FF0000', // Red
+//     'UNSTABLE': '#FFFF00', // Yellow
+//     'ABORTED': '#808080'   // Gray
+// ]
 def MESSAGE
 pipeline{
 	agent any
@@ -11,15 +11,15 @@ pipeline{
 		jdk 'JDK17'
 		maven 'MAVEN3.9'
 	}
-	environment{
-	    SNAP_REPO = 'my_student'
-        RELEASE_REPO = "my_student-release"
-        CENTRAL_REPO    = 'my_student-maven-central'
-        NEXUXIP = ''
-        NEXUS_PORT = '8081'
-        NEXUS_GRP_REPO = 'my_student-maven-group'
-        NEXUS_CREDENTIAL_ID = ''
-	}
+// 	environment{
+// 	    SNAP_REPO = 'my_student'
+//         RELEASE_REPO = "my_student-release"
+//         CENTRAL_REPO    = 'my_student-maven-central'
+//         NEXUXIP = ''
+//         NEXUS_PORT = '8081'
+//         NEXUS_GRP_REPO = 'my_student-maven-group'
+//         NEXUS_CREDENTIAL_ID = ''
+// 	}
 	stages {
 		stage('Fetch Code') {
 			steps {
@@ -28,22 +28,22 @@ pipeline{
 		}
 		stage('Build') {
 			steps {
-				sh 'mvn -s settings.xml -DskipTests install'
+				sh 'mvn clean install -DskipTests'
 			}
-			post {
-				success {
-					echo 'Now Archiving it...'
-                  archiveArtifacts artifacts: '**/target/*.war'
-               }
-            }
+// 			post {
+// 				success {
+// 					echo 'Now Archiving it...'
+//                   archiveArtifacts artifacts: '**/target/*.war'
+//                }
+//             }
 		}
-		stage(''){
-		    steps {
-		        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]){
-		            sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
-		        }
-		    }
-		}
+// 		stage(''){
+// 		    steps {
+// 		        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]){
+// 		            sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
+// 		        }
+// 		    }
+// 		}
 // 		stage('Unit Test') {
 // 			steps {
 // 				sh 'mvn -s settings.xml test'
