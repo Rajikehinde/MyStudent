@@ -61,12 +61,12 @@ pipeline{
 		//	}
 		//}
 	}
-	post {
-		always {
-			echo 'Slack Notification.'
-			slackSend channel: '#jenkins-notification',
-			    color: COLOR_MAP[currentBuild.currentResult] color: '#FFFF00',
-			    message: "*${currentBuild.currentResult}:* The Job: ${env.JOB_NAME} with build number: ${env.BUILD_NUMBER} has finished. Please check the details at: ${env.BUILD_URL}")
-		}
-	}
+// 	post {
+// 		always {
+// 			echo 'Slack Notification.'
+// 			slackSend channel: '#jenkins-notification',
+// 			    color: COLOR_MAP[currentBuild.currentResult] color: '#FFFF00',
+// 			    message: "*${currentBuild.currentResult}:* The Job: ${env.JOB_NAME} with build number: ${env.BUILD_NUMBER} has finished. Please check the details at: ${env.BUILD_URL}")
+// 		}
+// 	}
 }
