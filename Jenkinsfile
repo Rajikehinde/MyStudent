@@ -14,8 +14,8 @@ pipeline{
 	    SNAP_REPO = 'my_studentsnapshot'
         RELEASE_REPO = "my_student-release"
         CENTRAL_REPO    = 'my_student-maven-central'
-        NEXUXIP = '172.31.28.79'
-        NEXUS_PORT = '8081'
+        NEXUSIP = '172.31.28.79'
+        NEXUSPORT = '8081'
         NEXUS_GRP_REPO = 'my_student-maven-group'
         NEXUS_CREDENTIAL_ID = 'nexuslogin'
 	}
