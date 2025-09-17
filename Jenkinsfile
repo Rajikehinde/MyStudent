@@ -11,7 +11,7 @@ pipeline{
 		maven 'MAVEN3.9'
 	}
 	environment{
-	    SNAP_REPO = 'my_student'
+	    SNAP_REPO = 'my_studentsnapshot'
         RELEASE_REPO = "my_student-release"
         CENTRAL_REPO    = 'my_student-maven-central'
         NEXUXIP = '172.31.28.79'
