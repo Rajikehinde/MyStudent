@@ -38,11 +38,11 @@ pipeline{
 //             }
 		}
 		stage('Deploy to Nexus') {
-                    steps {
-                        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
-                            sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
-                        }
-                    }
+            steps {
+                withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
+            }
+       }
 // 		stage('Unit Test') {
 // 			steps {
 // 				sh 'mvn -s settings.xml test'
