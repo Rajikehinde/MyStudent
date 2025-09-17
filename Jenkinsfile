@@ -10,15 +10,15 @@ pipeline{
 		jdk 'JDK17'
 		maven 'MAVEN3.9'
 	}
-	environment{
-	    SNAP_REPO = 'my_studentsnapshot'
-        RELEASE_REPO = "my_student-release"
-        CENTRAL_REPO    = 'my_student-maven-central'
-        NEXUSIP = '172.31.28.79'
-        NEXUSPORT = '8081'
-        NEXUS_GRP_REPO = 'my_student-maven-group'
-        NEXUS_CREDENTIAL_ID = 'nexuslogin'
-	}
+// 	environment{
+// 	    SNAP_REPO = 'my_studentsnapshot'
+//         RELEASE_REPO = "my_student-release"
+//         CENTRAL_REPO    = 'my_student-maven-central'
+//         NEXUSIP = '172.31.28.79'
+//         NEXUSPORT = '8081'
+//         NEXUS_GRP_REPO = 'my_student-maven-group'
+//         NEXUS_CREDENTIAL_ID = 'nexuslogin'
+// 	}
 	stages {
 		stage('Fetch Code') {
 			steps {
@@ -27,17 +27,7 @@ pipeline{
 		}
 		stage('Build') {
 			steps {
-				sh """
-                mvn -s settings.xml -DskipTests clean install \
-                    -DNEXUSIP=${NEXUSIP} \
-                    -DNEXUSPORT=${NEXUSPORT} \
-                    -DNEXUS_USER=${NEXUS_USER} \
-                    -DNEXUS_PASS=${NEXUS_PASS} \
-                    -DSNAP_REPO=${SNAP_REPO} \
-                    -DRELEASE_REPO=${RELEASE_REPO} \
-                    -DCENTRAL_REPO=${CENTRAL_REPO} \
-                    -DNEXUS_GRP_REPO=${NEXUS_GRP_REPO}
-                """
+				sh 'mvn clean install -s settings.xml -DskipTests'
 			}
 // 			post {
 // 				success {
@@ -46,6 +36,13 @@ pipeline{
 //                }
 //             }
 		}
+// 		stage('Deploy to Nexus'){
+// 		    steps {
+// 		        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]){
+// 		            sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
+// 		        }
+// 		    }
+// 		}
 // 		stage('Unit Test') {
 // 			steps {
 // 				sh 'mvn -s settings.xml test'
