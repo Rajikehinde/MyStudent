@@ -13,8 +13,6 @@ pipeline{
 	}
 	environment{
 	    SNAP_REPO = 'my_studentsnapshot'
-	    NEXUS_USER = 'admin'
-        NEXUS_PASS = 'Olamilekan28'
         RELEASE_REPO = "my_student-release"
         CENTRAL_REPO = 'my_student-maven-central'
         NEXUXIP = '172.31.28.79'
@@ -39,6 +37,12 @@ pipeline{
 //                }
 //             }
 		}
+		stage('Deploy to Nexus') {
+                    steps {
+                        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+                            sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
+                        }
+                    }
 // 		stage('Unit Test') {
 // 			steps {
 // 				sh 'mvn -s settings.xml test'
