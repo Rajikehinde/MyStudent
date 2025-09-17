@@ -27,7 +27,17 @@ pipeline{
 		}
 		stage('Build') {
 			steps {
-				sh 'mvn clean install -s settings.xml -DskipTests'
+				sh """
+                mvn -s settings.xml -DskipTests clean install \
+                    -DNEXUSIP=${NEXUSIP} \
+                    -DNEXUSPORT=${NEXUSPORT} \
+                    -DNEXUS_USER=${NEXUS_USER} \
+                    -DNEXUS_PASS=${NEXUS_PASS} \
+                    -DSNAP_REPO=${SNAP_REPO} \
+                    -DRELEASE_REPO=${RELEASE_REPO} \
+                    -DCENTRAL_REPO=${CENTRAL_REPO} \
+                    -DNEXUS_GRP_REPO=${NEXUS_GRP_REPO}
+                """
 			}
 // 			post {
 // 				success {
@@ -35,13 +45,6 @@ pipeline{
 //                   archiveArtifacts artifacts: '**/target/*.war'
 //                }
 //             }
-		}
-		stage('Deploy to Nexus'){
-		    steps {
-		        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]){
-		            sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
-		        }
-		    }
 		}
 // 		stage('Unit Test') {
 // 			steps {
