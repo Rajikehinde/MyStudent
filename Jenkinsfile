@@ -27,7 +27,7 @@ pipeline{
 		}
 		stage('Build') {
 			steps {
-				sh 'mvn clean install -DskipTests'
+				sh 'mvn -s settings.xml clean install -DskipTests'
 			}
 // 			post {
 // 				success {
@@ -39,10 +39,16 @@ pipeline{
 		stage('Deploy to Nexus'){
 		    steps {
 		        withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]){
-		            sh "mvn deploy -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS}"
+		            sh """
+		            mvn -s settings.xml deploy \
+		             -DskipTests -Dnexus.username=${NEXUS_USER} -Dnexus.password=${NEXUS_PASS} \
+		            -DaltDeploymentRepository=my_studentsnapshot::default::http://${NEXUSIP}:${NEXUSPORT}/repository/my_studentsnapshot/ \
+		            -DaltReleaseDeploymentRepository=my_student-release::default::http://${NEXUSIP}:${NEXUSPORT}/repository/my_student-release/
+		            """
 		        }
 		    }
 		}
+
 // 		stage('Unit Test') {
 // 			steps {
 // 				sh 'mvn -s settings.xml test'
