@@ -103,7 +103,6 @@
 
 	<build>
 		<plugins>
-			<!-- Compiler Plugin -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -116,7 +115,6 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-			<!-- Spring Boot Plugin -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -133,15 +131,12 @@
 	</build>
 	<distributionManagement>
 		<snapshotRepository>
-			<id>my_studentsnapshot</id>
-			<!--suppress UnresolvedMavenProperty -->
-			<url>http://${NEXUSIP}:${NEXUSPORT}/repository/my_studentsnapshot/</url>
+			<id>SNAP_REPO</id>
+			<url>http://NEXUS_IP:NEXUS_PORT/repositories/my_studentsnapshot</url>
 		</snapshotRepository>
 		<repository>
-			<id>my_student-release</id>
-			<!--suppress UnresolvedMavenProperty -->
-			<url>http://${NEXUSIP}:${NEXUSPORT}/repository/my_student-release/</url>
+			<id>RELEASE_REPO</id>
+			<url>http://NEXUS_IP:NEXUS_PORT/repositories/my_student-release</url>
 		</repository>
 	</distributionManagement>
-
 </project>

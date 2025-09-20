@@ -14,8 +14,8 @@ pipeline{
 	    SNAP_REPO = 'my_studentsnapshot'
         RELEASE_REPO = "my_student-release"
         CENTRAL_REPO    = 'my_student-maven-central'
-        NEXUSIP = '172.31.28.79'
-        NEXUSPORT = '8081'
+        NEXUS_IP = '172.31.28.79'
+        NEXUS_PORT = '8081'
         NEXUS_GRP_REPO = 'my_student-maven-group'
         NEXUS_CREDENTIAL_ID = 'Nexuslogin'
 	}
@@ -30,12 +30,12 @@ pipeline{
 				sh 'mvn -s settings.xml install -DskipTests'
 			}
 
-// 			post {
-// 				success {
-// 					echo 'Now Archiving it...'
-//                   archiveArtifacts artifacts: '**/target/*.war'
-//                }
-//             }
+			post {
+				success {
+					echo 'Now Archiving it...'
+                  archiveArtifacts artifacts: '**/target/*.war'
+               }
+            }
 		}
 		stage('Deploy to Nexus') {
             steps {
