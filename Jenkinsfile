@@ -29,7 +29,6 @@ pipeline{
 			steps {
 				sh 'mvn  install -DskipTests'
 			}
-
 			post {
 				success {
 					echo 'Now Archiving it...'
@@ -52,12 +51,12 @@ pipeline{
 
 		stage('Unit Test') {
 			steps {
-				sh 'mvn -s settings.xml test'
+				sh 'mvn test'
 			}
 		}
 		stage('Checkstyle Analysis') {
         			steps {
-        				sh 'mvn -s settings.xml checkstyle:checkstyle'
+        				sh 'mvn checkstyle:checkstyle'
         			}
         		}
 		//stage('Deploy') {
