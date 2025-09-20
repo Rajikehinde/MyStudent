@@ -10,15 +10,15 @@ pipeline{
 		jdk 'JDK17'
 		maven 'MAVEN3.9'
 	}
-	environment{
-	    SNAP_REPO = 'my_studentsnapshot'
-        RELEASE_REPO = "my_student-release"
-        CENTRAL_REPO    = 'my_student-maven-central'
-        NEXUS_IP = '172.31.28.79'
-        NEXUS_PORT = '8081'
-        NEXUS_GRP_REPO = 'my_student-maven-group'
-        NEXUS_CREDENTIAL_ID = 'Nexuslogin'
-	}
+// 	environment{
+// 	    SNAP_REPO = 'my_studentsnapshot'
+//         RELEASE_REPO = "my_student-release"
+//         CENTRAL_REPO    = 'my_student-maven-central'
+//         NEXUS_IP = '172.31.28.79'
+//         NEXUS_PORT = '8081'
+//         NEXUS_GRP_REPO = 'my_student-maven-group'
+//         NEXUS_CREDENTIAL_ID = 'Nexuslogin'
+// 	}
 	stages {
 		stage('Fetch Code') {
 			steps {
@@ -30,25 +30,25 @@ pipeline{
 				sh 'mvn -s settings.xml install -DskipTests'
 			}
 
-			post {
-				success {
-					echo 'Now Archiving it...'
-                  archiveArtifacts artifacts: '**/target/*.war'
-               }
-            }
+// 			post {
+// 				success {
+// 					echo 'Now Archiving it...'
+//                   archiveArtifacts artifacts: '**/target/*.war'
+//                }
+//             }
 		}
-		stage('Deploy to Nexus') {
-            steps {
-                withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
-                    sh """
-                    mvn clean deploy -s settings.xml \
-                      -Dnexus.username=${NEXUS_USER} \
-                      -Dnexus.password=${NEXUS_PASS} \
-                      -DskipTests
-                    """
-                }
-            }
-        }
+// 		stage('Deploy to Nexus') {
+//             steps {
+//                 withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASS')]) {
+//                     sh """
+//                     mvn clean deploy -s settings.xml \
+//                       -Dnexus.username=${NEXUS_USER} \
+//                       -Dnexus.password=${NEXUS_PASS} \
+//                       -DskipTests
+//                     """
+//                 }
+//             }
+//         }
 
 // 		stage('Unit Test') {
 // 			steps {
