@@ -10,15 +10,15 @@ pipeline{
 		jdk 'JDK17'
 		maven 'MAVEN3.9'
 	}
-// 	environment{
-// 	    SNAP_REPO = 'my_studentsnapshot'
-//         RELEASE_REPO = "my_student-release"
-//         CENTRAL_REPO    = 'my_student-maven-central'
-//         NEXUS_IP = '172.31.28.79'
-//         NEXUS_PORT = '8081'
-//         NEXUS_GRP_REPO = 'my_student-maven-group'
-//         NEXUS_CREDENTIAL_ID = 'Nexuslogin'
-// 	}
+	environment{
+	    SNAP_REPO = 'my_studentsnapshot'
+        RELEASE_REPO = "my_student-release"
+        CENTRAL_REPO    = 'my_student-maven-central'
+        NEXUS_IP = '172.31.28.79'
+        NEXUS_PORT = '8081'
+        NEXUS_GRP_REPO = 'my_student-maven-group'
+        NEXUS_CREDENTIAL_ID = 'Nexuslogin'
+	}
 	stages {
 		stage('Fetch Code') {
 			steps {
@@ -27,14 +27,14 @@ pipeline{
 		}
 		stage('Build') {
 			steps {
-				sh 'mvn  install -DskipTests'
+				sh 'mvn -s settings install -DskipTests'
 			}
-			post {
-				success {
-					echo 'Now Archiving it...'
-                  archiveArtifacts artifacts: '**/target/*.war'
-               }
-            }
+// 			post {
+// 				success {
+// 					echo 'Now Archiving it...'
+//                   archiveArtifacts artifacts: '**/target/*.war'
+//                }
+//             }
 		}
 // 		stage('Deploy to Nexus') {
 //             steps {
