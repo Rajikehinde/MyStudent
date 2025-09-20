@@ -30,12 +30,12 @@ pipeline{
 				sh 'mvn  install -DskipTests'
 			}
 
-// 			post {
-// 				success {
-// 					echo 'Now Archiving it...'
-//                   archiveArtifacts artifacts: '**/target/*.war'
-//                }
-//             }
+			post {
+				success {
+					echo 'Now Archiving it...'
+                  archiveArtifacts artifacts: '**/target/*.war'
+               }
+            }
 		}
 // 		stage('Deploy to Nexus') {
 //             steps {
@@ -50,16 +50,16 @@ pipeline{
 //             }
 //         }
 
-// 		stage('Unit Test') {
-// 			steps {
-// 				sh 'mvn -s settings.xml test'
-// 			}
-// 		}
-// 		stage('Checkstyle Analysis') {
-//         			steps {
-//         				sh 'mvn -s settings.xml checkstyle:checkstyle'
-//         			}
-//         		}
+		stage('Unit Test') {
+			steps {
+				sh 'mvn -s settings.xml test'
+			}
+		}
+		stage('Checkstyle Analysis') {
+        			steps {
+        				sh 'mvn -s settings.xml checkstyle:checkstyle'
+        			}
+        		}
 		//stage('Deploy') {
 		//	steps {
 		//		echo 'Deploying...'
