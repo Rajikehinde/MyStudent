@@ -3,16 +3,30 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
 
+    <profiles>
+        <profile>
+            <id>nexus</id>
+            <properties>
+                <nexus.ip>${env.NEXUSIP}</nexus.ip>
+                <nexus.port>${env.NEXUSPORT}</nexus.port>
+            </properties>
+        </profile>
+    </profiles>
+
+    <activeProfiles>
+        <activeProfile>nexus</activeProfile>
+    </activeProfiles>
+
     <servers>
         <server>
             <id>${SNAP_REPO}</id>
-            <username>${NEXUS_USER}</username>
-            <password>${NEXUS_PASS}</password>
+            <username>${env.NEXUS_USER}</username>
+            <password>${env.NEXUS_PASS}</password>
         </server>
         <server>
             <id>${RELEASE_REPO}</id>
-            <username>${NEXUS_USER}</username>
-            <password>${NEXUS_PASS}</password>
+            <username>${env.NEXUS_USER}</username>
+            <password>${env.NEXUS_PASS}</password>
         </server>
         <server>
             <id>${CENTRAL_REPO}</id>

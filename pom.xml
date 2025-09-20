@@ -127,16 +127,31 @@
 					</excludes>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>3.1.1</version>
+				<executions>
+					<execution>
+						<id>default-deploy</id>
+						<phase>deploy</phase>
+						<goals>
+							<goal>deploy</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
-<!--	<distributionManagement>-->
-<!--		<snapshotRepository>-->
-<!--			<id>${SNAP_REPO}</id>-->
-<!--			<url>http://${SNAP_REPO}:NEXUS_PORT/repositories/my_studentsnapshot</url>-->
-<!--		</snapshotRepository>-->
-<!--		<repository>-->
-<!--			<id>RELEASE_REPO</id>-->
-<!--			<url>http://NEXUS_IP:NEXUS_PORT/repositories/my_student-release</url>-->
-<!--		</repository>-->
-<!--	</distributionManagement>-->
+	<distributionManagement>
+		<snapshotRepository>
+			<id>my_studentsnapshot</id>
+			<url>http://172.31.28.79:8081/repository/my_studentsnapshot/</url>
+		</snapshotRepository>
+		<repository>
+			<id>my_student-release</id>
+			<url>http://172.31.28.79:8081/repository/my_student-release/</url>
+		</repository>
+	</distributionManagement>
+
 </project>
