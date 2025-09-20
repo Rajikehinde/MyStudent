@@ -7,8 +7,8 @@
         <profile>
             <id>nexus</id>
             <properties>
-                <nexus.ip>${env.NEXUSIP}</nexus.ip>
-                <nexus.port>${env.NEXUSPORT}</nexus.port>
+                <nexus.ip>${env.NEXUS_IP}</nexus.ip>
+                <nexus.port>${env.NEXUS_PORT}</nexus.port>
             </properties>
         </profile>
     </profiles>
