@@ -145,13 +145,12 @@
 	</build>
 	<distributionManagement>
 		<snapshotRepository>
-			<id>my_studentsnapshot</id>
-			<url>http://172.31.28.79:8081/repository/my_studentsnapshot/</url>
+			<id>SNAP_REP</id>
+			<url>http://$"{NEXUS_USER}":$"{NEXUS_PASS}"/repository/my_studentsnapshot/</url>
 		</snapshotRepository>
 		<repository>
-			<id>my_student-release</id>
-			<url>http://172.31.28.79:8081/repository/my_student-release/</url>
+			<id>RELEASE_REPO</id>
+			<url>http://$"{NEXUS_USER}":$"{NEXUS_PASS}"/repository/my_student-release/</url>
 		</repository>
 	</distributionManagement>
-
 </project>
