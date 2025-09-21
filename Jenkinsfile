@@ -12,7 +12,7 @@ pipeline{
 	}
 	environment{
 	    SNAP_REPO = 'my_studentsnapshot'
-        RELEASE_REPO = "my_student-release"
+        RELEASE_REPO = 'my_student-release'
         CENTRAL_REPO    = 'my_student-maven-central'
         NEXUS_IP = '172.31.28.79'
         NEXUS_PORT = '8081'
@@ -26,12 +26,15 @@ pipeline{
 			}
 		}
 		stage('Build') {
-			steps {
-				withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: "${NEXUS_USER}", passwordVariable: "${NEXUS_PASS}")]) {
-                    sh 'mvn -s settings.xml clean install -DskipTests'
-                }
-
-			}
+            steps {
+                sh '''
+                  mvn clean install -DskipTests \
+                    -Dnexus.ip=$NEXUS_IP \
+                    -Dnexus.port=$NEXUS_PORT \
+                    -s /var/lib/jenkins/.m2/settings.xml
+                '''
+           }
+        }
 // 			post {
 // 				success {
 // 					echo 'Now Archiving it...'
@@ -41,27 +44,25 @@ pipeline{
 		}
 		stage('Deploy to Nexus') {
             steps {
-                withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIAL_ID}", usernameVariable: "${NEXUS_USER}", passwordVariable: "${NEXUS_PASS}")]) {
-                    sh """
-                    mvn clean deploy -s settings.xml \
-                      -Dnexus.username=${NEXUS_USER} \
-                      -Dnexus.password=${NEXUS_PASS} \
-                      -DskipTests
-                    """
-                }
+                sh '''
+                  mvn deploy \
+                    -Dnexus.ip=$NEXUS_IP \
+                    -Dnexus.port=$NEXUS_PORT \
+                    -s /var/lib/jenkins/.m2/settings.xml
+                '''
             }
-        }
+       }
 
-		stage('Unit Test') {
-			steps {
-				sh 'mvn test -s settings.xml'
-			}
-		}
-		stage('Checkstyle Analysis') {
-        			steps {
-        				sh 'mvn checkstyle:checkstyle -s settings.xml'
-        			}
-        		}
+// 		stage('Unit Test') {
+// 			steps {
+// 				sh 'mvn test -s settings.xml'
+// 			}
+// 		}
+// 		stage('Checkstyle Analysis') {
+//         	steps {
+//         		sh 'mvn checkstyle:checkstyle -s settings.xml'
+//         	}
+//        	}
 		//stage('Deploy') {
 		//	steps {
 		//		echo 'Deploying...'

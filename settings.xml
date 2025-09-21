@@ -3,50 +3,36 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
 
-    <profiles>
-        <profile>
-            <id>nexus</id>
-            <properties>
-                <nexus.ip>${env.NEXUS_IP}</nexus.ip>
-                <nexus.port>${env.NEXUS_PORT}</nexus.port>
-            </properties>
-        </profile>
-    </profiles>
+        <servers>
+            <server>
+                <id>snapshots</id>
+                <username>${env.NEXUS_USER}</username>
+                <password>${env.NEXUS_PASS}</password>
+            </server>
+            <server>
+                <id>releases</id>
+                <username>${env.NEXUS_USER}</username>
+                <password>${env.NEXUS_PASS}</password>
+            </server>
+            <server>
+                <id>CENTRAL_REPO</id>
+                <username>${env.NEXUS_USER}</username>
+                <password>${env.NEXUS_PASS}</password>
+            </server>
+            <server>
+                <id>NEXUS_GRP_REPO</id>
+                <username>${env.NEXUS_USER}</username>
+                <password>${env.NEXUS_PASS}</password>
+            </server>
+        </servers>
 
-    <activeProfiles>
-        <activeProfile>nexus</activeProfile>
-    </activeProfiles>
-
-    <servers>
-        <server>
-            <id>${SNAP_REPO}</id>
-            <username>${env.NEXUS_USER}</username>
-            <password>${env.NEXUS_PASS}</password>
-        </server>
-        <server>
-            <id>${RELEASE_REPO}</id>
-            <username>${env.NEXUS_USER}</username>
-            <password>${env.NEXUS_PASS}</password>
-        </server>
-        <server>
-            <id>${CENTRAL_REPO}</id>
-            <username>${env.NEXUS_USER}</username>
-            <password>${env.NEXUS_PASS}</password>
-        </server>
-        <server>
-            <id>${NEXUS_GRP_REPO}</id>
-            <username>${env.NEXUS_USER}</username>
-            <password>${env.NEXUS_PASS}</password>
-        </server>
-    </servers>
-
-    <mirrors>
-        <mirror>
-            <id>${CENTRAL_REPO}</id>
-            <name>${CENTRAL_REPO}</name>
-            <url>http://${NEXUS_IP}:${NEXUS_PORT}/repository/${NEXUS_GRP_REPO}/</url>
-            <mirrorOf>*</mirrorOf>
-        </mirror>
-    </mirrors>
+        <mirrors>
+            <mirror>
+                <id>CENTRAL_REPO</id>
+                <name>CENTRAL_REPO</name>
+                <url>http://${NEXUS_IP}:${NEXUS_PORT}/repository/${NEXUS_GRP_REPO}/</url>
+                <mirrorOf>*</mirrorOf>
+            </mirror>
+        </mirrors>
 
 </settings>

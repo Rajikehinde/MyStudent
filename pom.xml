@@ -28,7 +28,10 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<nexus.ip>localhost</nexus.ip> <!-- overridden in Jenkins -->
+		<nexus.port>8081</nexus.port>
 	</properties>
+
 	<dependencies>
 		<!-- Spring Boot Starters -->
 		<dependency>
@@ -127,30 +130,33 @@
 					</excludes>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-deploy-plugin</artifactId>
-				<version>3.1.1</version>
-				<executions>
-					<execution>
-						<id>default-deploy</id>
-						<phase>deploy</phase>
-						<goals>
-							<goal>deploy</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-deploy-plugin</artifactId>-->
+<!--				<version>3.1.1</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>default-deploy</id>-->
+<!--						<phase>deploy</phase>-->
+<!--						<goals>-->
+<!--							<goal>deploy</goal>-->
+<!--						</goals>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
 		</plugins>
 	</build>
+
 	<distributionManagement>
 		<snapshotRepository>
-			<id>SNAP_REP</id>
-			<url>http://$"{NEXUS_USER}":$"{NEXUS_PASS}"/repository/my_studentsnapshot/</url>
+			<id>snapshots</id>
+			<url>http://${nexus.ip}:${nexus.port}/repository/my_studentsnapshot/</url>
 		</snapshotRepository>
 		<repository>
-			<id>RELEASE_REPO</id>
-			<url>http://$"{NEXUS_USER}":$"{NEXUS_PASS}"/repository/my_student-release/</url>
+			<id>releases</id>
+			<url>http://${nexus.ip}:${nexus.port}/repository/my_student-release/</url>
 		</repository>
 	</distributionManagement>
+
+
 </project>
