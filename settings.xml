@@ -3,6 +3,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd">
 
+<!--    Authentication access-->
         <servers>
             <server>
                 <id>snapshots</id>
@@ -15,22 +16,22 @@
                 <password>${env.NEXUS_PASS}</password>
             </server>
             <server>
-                <id>CENTRAL_REPO</id>
-                <username>${env.NEXUS_USER}</username>
-                <password>${env.NEXUS_PASS}</password>
+                <id>${CENTRAL_REPO}</id>
+                <username>${NEXUS_USER}</username>
+                <password>${NEXUS_PASS}</password>
             </server>
             <server>
-                <id>NEXUS_GRP_REPO</id>
-                <username>${env.NEXUS_USER}</username>
-                <password>${env.NEXUS_PASS}</password>
+                <id>${NEXUS_GRP_REPO}</id>
+                <username>${NEXUS_USER}</username>
+                <password>${NEXUS_PASS}</password>
             </server>
         </servers>
 
         <mirrors>
             <mirror>
-                <id>CENTRAL_REPO</id>
-                <name>CENTRAL_REPO</name>
-                <url>http://${NEXUS_IP}:${NEXUS_PORT}/repository/${NEXUS_GRP_REPO}/</url>
+                <id>${CENTRAL_REPO}</id>
+                <name>${CENTRAL_REPO}</name>
+                <url>http://${NEXUSIP}:${NEXUSPORT}/repository/${NEXUS_GRP_REPO}/</url>
                 <mirrorOf>*</mirrorOf>
             </mirror>
         </mirrors>

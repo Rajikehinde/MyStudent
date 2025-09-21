@@ -12,10 +12,12 @@ pipeline{
 	}
 	environment{
 	    SNAP_REPO = 'my_studentsnapshot'
+	    NEXUS_USER = 'admin'
+	    NEXUS_PASS = 'Olamilekan28'
         RELEASE_REPO = 'my_student-release'
         CENTRAL_REPO    = 'my_student-maven-central'
-        NEXUS_IP = '172.31.28.79'
-        NEXUS_PORT = '8081'
+        NEXUSIP = '172.31.28.79'
+        NEXUSPORT = '8081'
         NEXUS_GRP_REPO = 'my_student-maven-group'
         NEXUS_CREDENTIAL_ID = 'Nexuslogin'
 	}
@@ -27,12 +29,7 @@ pipeline{
 		}
 		stage('Build') {
             steps {
-                sh '''
-                  mvn clean install -DskipTests \
-                    -Dnexus.ip=$NEXUS_IP \
-                    -Dnexus.port=$NEXUS_PORT \
-                    -s /var/lib/jenkins/.m2/settings.xml
-                '''
+                sh 'mvn -s settings.xml -DskipTests install'
            }
         }
 // 			post {
@@ -41,16 +38,16 @@ pipeline{
 //                   archiveArtifacts artifacts: '**/target/*.war'
 //                }
 //             }
-		stage('Deploy to Nexus') {
-            steps {
-                sh '''
-                  mvn deploy \
-                    -Dnexus.ip=$NEXUS_IP \
-                    -Dnexus.port=$NEXUS_PORT \
-                    -s /var/lib/jenkins/.m2/settings.xml
-                '''
-            }
-       }
+// 		stage('Deploy to Nexus') {
+//             steps {
+//                 sh '''
+//                   mvn deploy \
+//                     -Dnexus.ip=$NEXUS_IP \
+//                     -Dnexus.port=$NEXUS_PORT \
+//                     -s /var/lib/jenkins/.m2/settings.xml
+//                 '''
+//             }
+//        }
 
 // 		stage('Unit Test') {
 // 			steps {
