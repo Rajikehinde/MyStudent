@@ -31,40 +31,24 @@ pipeline{
             steps {
                 sh 'mvn -s settings.xml -DskipTests install'
            }
-        }
-// 			post {
-// 				success {
-// 					echo 'Now Archiving it...'
-//                   archiveArtifacts artifacts: '**/target/*.war'
+//            post {
+//         		success {
+//             		echo 'Now Archiving it...'
+//                     archiveArtifacts artifacts: '**/target/*.war'
 //                }
 //             }
-// 		stage('Deploy to Nexus') {
-//             steps {
-//                 sh '''
-//                   mvn deploy \
-//                     -Dnexus.ip=$NEXUS_IP \
-//                     -Dnexus.port=$NEXUS_PORT \
-//                     -s /var/lib/jenkins/.m2/settings.xml
-//                 '''
-//             }
-//        }
+        }
 
-// 		stage('Unit Test') {
-// 			steps {
-// 				sh 'mvn test -s settings.xml'
-// 			}
-// 		}
-// 		stage('Checkstyle Analysis') {
-//         	steps {
-//         		sh 'mvn checkstyle:checkstyle -s settings.xml'
-//         	}
-//        	}
-		//stage('Deploy') {
-		//	steps {
-		//		echo 'Deploying...'
-		//		// Add your deployment commands here
-		//	}
-		//}
+		stage('Unit Test') {
+			steps {
+				sh 'mvn -s settings.xml test'
+			}
+		}
+		stage('Checkstyle Analysis') {
+        	steps {
+        		sh 'mvn -s settings.xml checkstyle:checkstyle '
+        	}
+       	}
 	}
 // 	post {
 // 		always {
