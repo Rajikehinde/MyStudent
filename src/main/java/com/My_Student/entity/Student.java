@@ -2,7 +2,10 @@ package com.My_Student.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.catalina.core.ApplicationContext;
+import org.apache.catalina.core.StandardContext;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -20,11 +23,10 @@ public class Student {
     private String firstName;
     private String surName;
     private String middleName;
-    private String studentName;
-    private String password;
-    private int year;
+//    private String password;
+    private LocalDate dateOfBirth;
     private int age;
-    private Roles roles;
+//    private Roles roles;
     private int phoneNumber;
     private Gender gender;
     private String email;
@@ -39,4 +41,5 @@ public class Student {
             joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "StudentId"),
             inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "courseId"))
     private List<Course> courses;
+
 }

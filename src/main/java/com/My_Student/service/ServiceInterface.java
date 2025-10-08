@@ -3,11 +3,8 @@ package com.My_Student.service;
 import com.My_Student.dto.Request;
 import com.My_Student.dto.Response;
 import com.My_Student.entity.Student;
-import com.My_Student.repository.StudentRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -18,9 +15,15 @@ public interface ServiceInterface {
 
     Page<Response> listStudents(String field);
 
+    List<Response> listAllStudents();
+
     Response searchForStudent(Long id);
 
-    Response updateStudentInformation (Request StudentRequestInformation);
+    Response updateStudentInformation (Request studentRequestInformation);
 
     Response deleteStudent (Long id);
+
+    int ageCalculator(Student student);
+
+    int age();
 }
