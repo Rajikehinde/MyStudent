@@ -1,14 +1,20 @@
 package com.My_Student.utitlities;
 
 public class Utils {
-    public static String SUCCESS_CODE = "200";
-    public static String SUCCESS_MESSAGE = "congratulations!!";
-    public static String EXISTS_CODE = "201";
-    public static String EXISTS_MESSAGE = "student already exists in database";
+    private Utils(){
+        // restrict instantiation
+    }
+    public static String STATUS_201 = "201";
+    public static String MESSAGE_201 = "congratulations!!";
+    public static final String  STATUS_200 = "200";
+    public static final String  MESSAGE_200 = "Request processed successfully";
+    public static String STATUS_409 = "409";
+    public static String MESSAGE_409 = "student already exists in database";
     public static String NOT_EXISTS_CODE = "505";
     public static String NOT_EXISTS_MESSAGE = "student information not exists in database";
-    public static String UPDATED_CODE = "200";
-    public static String UPDATED_MESSAGE = "student successfully updated";
-    public static String DELETE_CODE = "200";
-    public static String DELETE_MESSAGE = "student successfully deleted in database";
+    public static final String  STATUS_417 = "417";
+    public static final String  MESSAGE_417_UPDATE= "Update operation failed. Please try again or contact Dev team";
+    public static final String  MESSAGE_417_DELETE= "Delete operation failed. Please try again or contact Dev team";
+    public static final String  STATUS_500 = "500";
+    public static final String  MESSAGE_500 = "An error occurred. Please try again or contact Dev team";
 }

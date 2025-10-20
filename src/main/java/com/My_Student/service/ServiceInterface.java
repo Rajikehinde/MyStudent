@@ -1,8 +1,7 @@
 package com.My_Student.service;
 
-import com.My_Student.dto.Request;
+import com.My_Student.dto.StudentRequestDto;
 import com.My_Student.dto.Response;
-import com.My_Student.entity.Student;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -10,7 +9,7 @@ import java.util.List;
 
 public interface ServiceInterface {
 
-    Response registerStudent(Request candidateInformationRequest);
+    Response registerStudent(StudentRequestDto candidateInformationStudentRequestDto);
 
 
     Page<Response> listStudents(String field);
@@ -19,11 +18,7 @@ public interface ServiceInterface {
 
     Response searchForStudent(Long id);
 
-    Response updateStudentInformation (Request studentRequestInformation);
+    Response updateStudentInformation (StudentRequestDto studentStudentRequestDtoInformation);
 
     Response deleteStudent (Long id);
-
-    int ageCalculator(Student student);
-
-    int age();
 }

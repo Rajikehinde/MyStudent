@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Table(name = "student")
-public class Student {
+public class Student extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,23 +23,9 @@ public class Student {
     private String firstName;
     private String surName;
     private String middleName;
-//    private String password;
     private LocalDate dateOfBirth;
     private int age;
-//    private Roles roles;
     private int phoneNumber;
     private Gender gender;
     private String email;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "student_department",
-            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "StudentId"),
-            inverseJoinColumns = @JoinColumn(name = "department_id", referencedColumnName = "departmentId"))
-    private Department department;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "student_course",
-            joinColumns = @JoinColumn(name = "student_id", referencedColumnName = "StudentId"),
-            inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "courseId"))
-    private List<Course> courses;
-
 }

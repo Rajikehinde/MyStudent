@@ -1,7 +1,7 @@
 package com.My_Student.service;
 
 import com.My_Student.dto.DataView;
-import com.My_Student.dto.Request;
+import com.My_Student.dto.StudentRequestDto;
 import com.My_Student.dto.Response;
 import com.My_Student.entity.Gender;
 import com.My_Student.entity.Student;
@@ -34,37 +34,31 @@ public class ServiceImplementation implements ServiceInterface{
     }
 
     @Override
-    public Response registerStudent(Request candidateInformationRequest) {
+    public Response registerStudent(StudentRequestDto candidateInformationStudentRequestDto) {
 
-        Boolean studentProfileExists = studentRepository.existsByEmail(candidateInformationRequest.getEmail());
+        Boolean studentProfileExists = studentRepository.existsByEmail(candidateInformationStudentRequestDto.getEmail());
         if (studentProfileExists) {
             return Response.builder()
-                    .responseCode(Utils.EXISTS_CODE)
-                    .responseMessage(Utils.EXISTS_MESSAGE)
+                    .responseCode(Utils.STATUS_409)
+                    .responseMessage(Utils.MESSAGE_409)
                     .build();
         }else {
-
             Student createStudentProfile = Student.builder()
-                    .surName(candidateInformationRequest.getSurName())
-                    .middleName(candidateInformationRequest.getMiddleName())
-                    .firstName(candidateInformationRequest.getFirstName())
-                    .dateOfBirth(candidateInformationRequest.getDateOfBirth())
-                    .email(candidateInformationRequest.getEmail())
-                    .phoneNumber(candidateInformationRequest.getPhoneNumber())
-                    .gender(gender(Gender.valueOf(candidateInformationRequest.getGender().toString())))
+                    .surName(candidateInformationStudentRequestDto.getSurName())
+                    .middleName(candidateInformationStudentRequestDto.getMiddleName())
+                    .firstName(candidateInformationStudentRequestDto.getFirstName())
+                    .dateOfBirth(candidateInformationStudentRequestDto.getDateOfBirth())
+                    .email(candidateInformationStudentRequestDto.getEmail())
+                    .phoneNumber(candidateInformationStudentRequestDto.getPhoneNumber())
+                    .gender(gender(Gender.valueOf(candidateInformationStudentRequestDto.getGender().toString())))
                     .build();
-
             int age = ageCalculator(createStudentProfile);
             createStudentProfile.setAge(age);
 
-
-            log.info("Received date of birth: {}", candidateInformationRequest.getDateOfBirth());
-
             Student student = studentRepository.save(createStudentProfile);
-//            log.info("Check if my request gets here");
             return Response.builder()
-                    .responseCode(Utils.SUCCESS_CODE)
-                    .responseMessage(Utils.SUCCESS_MESSAGE)
+                    .responseCode(Utils.STATUS_201)
+                    .responseMessage(Utils.MESSAGE_201)
                     .dataView(DataView.builder()
                             .name(student.getSurName() + " " + student.getMiddleName() + " " + student.getFirstName())
                             .build())
@@ -80,8 +74,8 @@ public class ServiceImplementation implements ServiceInterface{
         List<Response> responseList = new ArrayList<>();
         for(Student student: studentLists){
             responseList.add(Response.builder()
-                            .responseCode(Utils.SUCCESS_CODE)
-                            .responseMessage(Utils.SUCCESS_MESSAGE)
+                            .responseCode(Utils.STATUS_200)
+                            .responseMessage(Utils.MESSAGE_200)
                             .dataView(DataView.builder()
                                     .name(student.getSurName() + " " + student.getMiddleName() + " " + student.getFirstName())
                                     .build())
@@ -97,8 +91,8 @@ public class ServiceImplementation implements ServiceInterface{
         List<Response> responseList = new ArrayList<>();
         for (Student student : studentLists) {
             responseList.add(Response.builder()
-                    .responseCode(Utils.SUCCESS_CODE)
-                    .responseMessage(Utils.SUCCESS_MESSAGE)
+                    .responseCode(Utils.STATUS_200)
+                    .responseMessage(Utils.MESSAGE_200)
                     .dataView(DataView.builder()
                             .name(student.getSurName() + " " + student.getMiddleName() + " " + student.getFirstName() + " " + student.getGender() + " " + student.getAge())
                             .build())
@@ -117,8 +111,8 @@ public class ServiceImplementation implements ServiceInterface{
         }
         Student student = studentRepository.findById(studentId).get();
         return Response.builder()
-                .responseCode(Utils.EXISTS_CODE)
-                .responseMessage(Utils.EXISTS_MESSAGE)
+                .responseCode(Utils.STATUS_200)
+                .responseMessage(Utils.MESSAGE_200)
                 .dataView(DataView.builder()
                         .name(student.getSurName() + " " + student.getMiddleName() + " " + student.getFirstName())
                         .build())
@@ -126,8 +120,8 @@ public class ServiceImplementation implements ServiceInterface{
     }
 
     @Override
-    public Response updateStudentInformation(Request studentRequestInformation) {
-        Boolean checkStudentInDatabase = studentRepository.existsByEmail(studentRequestInformation.getEmail());
+    public Response updateStudentInformation(StudentRequestDto studentStudentRequestDtoInformation) {
+        Boolean checkStudentInDatabase = studentRepository.existsByEmail(studentStudentRequestDtoInformation.getEmail());
 
         if (!checkStudentInDatabase){
             return Response.builder()
@@ -136,21 +130,21 @@ public class ServiceImplementation implements ServiceInterface{
                     .build();
         }
         Student student = Student.builder()
-                .surName(studentRequestInformation.getSurName())
-                .middleName(studentRequestInformation.getMiddleName())
-                .firstName(studentRequestInformation.getFirstName())
-                .email(studentRequestInformation.getEmail())
-                .age(studentRequestInformation.getAge())
-                .dateOfBirth(studentRequestInformation.getDateOfBirth())
-                .phoneNumber(studentRequestInformation.getPhoneNumber())
-                .gender(gender(Gender.valueOf(studentRequestInformation.getGender().toString())))
+                .surName(studentStudentRequestDtoInformation.getSurName())
+                .middleName(studentStudentRequestDtoInformation.getMiddleName())
+                .firstName(studentStudentRequestDtoInformation.getFirstName())
+                .email(studentStudentRequestDtoInformation.getEmail())
+                .age(studentStudentRequestDtoInformation.getAge())
+                .dateOfBirth(studentStudentRequestDtoInformation.getDateOfBirth())
+                .phoneNumber(studentStudentRequestDtoInformation.getPhoneNumber())
+                .gender(gender(Gender.valueOf(studentStudentRequestDtoInformation.getGender().toString())))
                 .age(age())
                 .build();
         Student updatedProfile = studentRepository.save(student);
 
         return Response.builder()
-                .responseCode(Utils.UPDATED_CODE)
-                .responseMessage(Utils.UPDATED_MESSAGE)
+                .responseCode(Utils.STATUS_201)
+                .responseMessage(Utils.MESSAGE_201)
                 .dataView(DataView.builder()
                         .name(updatedProfile.getSurName() + " " + updatedProfile.getFirstName() + " " + updatedProfile.getFirstName())
                         .build())
@@ -170,17 +164,12 @@ public class ServiceImplementation implements ServiceInterface{
 
 //        Student student = studentRepository.delete(id).get();
         return Response.builder()
-                .responseCode(Utils.DELETE_CODE)
-                .responseMessage(Utils.DELETE_MESSAGE)
+                .responseCode(Utils.STATUS_201)
+                .responseMessage(Utils.MESSAGE_201)
                 .build();
     }
 
-    @Override
-    public int ageCalculator(Student student) {
-
-        System.out.println("Student object: " + student);
-        System.out.println("Date of birth: " + (student != null ? student.getDateOfBirth() : "null"));
-
+    private int ageCalculator(Student student) {
 
         if (student == null || student.getDateOfBirth() == null) {
             throw new IllegalArgumentException("Invalid student or year of birth");
@@ -194,13 +183,11 @@ public class ServiceImplementation implements ServiceInterface{
 
         return age;
     }
-
-    @Override
-    public int age() {
+    private int age() {
         return ageCalculator(student);
     }
 
-    public Gender gender(Gender gender) {
+    private Gender gender(Gender gender) {
         if (gender.toString().equalsIgnoreCase(Gender.MALE.toString())) {
             return Gender.MALE;
         } else if (gender.toString().equalsIgnoreCase(Gender.FEMALE.toString())) {
