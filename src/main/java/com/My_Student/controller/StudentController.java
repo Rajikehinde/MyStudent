@@ -34,7 +34,6 @@ public class StudentController {
                 .body(new Response(Utils.STATUS_201, Utils.MESSAGE_201, DataView.builder().build()));
     }
 
-
     @GetMapping("/all/students{field}")
     Page<Response> listAllStudents(@PathVariable String field){
         Page<Response> allStudents = serviceImplementation.listStudents(field);

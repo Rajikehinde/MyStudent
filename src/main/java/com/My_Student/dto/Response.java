@@ -13,4 +13,7 @@ public class Response {
     private String responseCode;
     private String responseMessage;
     private DataView dataView;
+
+//    private String statusCode;
+//    private String statusMessage;
 }

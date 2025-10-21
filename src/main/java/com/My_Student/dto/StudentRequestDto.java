@@ -46,6 +46,4 @@ public class StudentRequestDto {
 
     @Pattern(regexp = "(^$|[0-9]{10})", message = "Mobile number must be 10 digits")
     private int phoneNumber;
-    private String courseName;
-
 }
