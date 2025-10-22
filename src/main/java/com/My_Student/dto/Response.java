@@ -15,12 +15,12 @@ import lombok.NoArgsConstructor;
         description = "Schema to hold response information")
 public class Response {
     @Schema(
-            description = "Response code in the response", example = "200"
+            description = "Response code in the response"
     )
     private String responseCode;
 
     @Schema(
-            description = "Response message in the response", example = "Student created successfully"
+            description = "Response message in the response"
     )
     private String responseMessage;
 
